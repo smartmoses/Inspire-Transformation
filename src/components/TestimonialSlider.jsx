@@ -1,7 +1,38 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Quote } from 'lucide-react';
-import { TESTIMONIALS } from '../utils/constants'; // Make sure this path is correct
+
+// --- TESTIMONIALS data is now inside the component with 100% reliable placeholder images ---
+//
+// HOW TO USE YOUR OWN IMAGES:
+// 1. Create a folder: `public/images/testimonials/`
+// 2. Add your images there, e.g., `sarah-j.jpg`, `david-c.jpg`, etc.
+// 3. Replace the `image` URLs below with your local paths, e.g., `image: '/images/testimonials/sarah-j.jpg'`
+//
+const TESTIMONIALS = [
+    {
+      name: 'Sarah Johnson',
+      title: 'Workshop Participant',
+      quote: 'The mentorship program completely changed my perspective. I feel more confident and equipped for the future.',
+      // This is a reliable placeholder that will always work. Replace with your own image.
+      image: 'https://i.pravatar.cc/500?u=sarahjohnson',
+    },
+    {
+      name: 'David Chen',
+      title: 'Community Volunteer',
+      quote: 'Volunteering with Inspire Transformation has been a deeply rewarding experience. Seeing the direct impact on people\'s lives is incredible.',
+      // This is a reliable placeholder that will always work. Replace with your own image.
+      image: 'https://i.pravatar.cc/500?u=davidchen',
+    },
+    {
+      name: 'Rev. Maria Garcia',
+      title: 'Partner Church Pastor',
+      quote: 'Our partnership has allowed our congregation to engage in meaningful, hands-on community service. It has been a true blessing.',
+       // This is a reliable placeholder that will always work. Replace with your own image.
+      image: 'https://i.pravatar.cc/500?u=mariagarcia',
+    }
+];
+
 
 export default function StoryReelTestimonials() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -42,7 +73,7 @@ export default function StoryReelTestimonials() {
 
         <div className="grid lg:grid-cols-3 gap-12 items-center">
           {/* Main Display */}
-          <div className="lg:col-span-2 relative h-[24rem] rounded-2xl overflow-hidden">
+          <div className="lg:col-span-2 relative h-[32rem] rounded-2xl overflow-hidden">
             <AnimatePresence>
                 <motion.img
                     key={`img-${activeIndex}`}

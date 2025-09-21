@@ -39,24 +39,24 @@ const heroContent = {
 const featuredPrograms = [
     {
       slug: 'resilience-mentorship',
-      // SUGGESTION: Use a photo of a one-on-one mentorship session or a small group discussion.
-      imageUrl: '/images/real/resilience-mentorship-session.jpg',
+      // FIX: Replaced unreliable URL with a guaranteed working placeholder.
+      imageUrl: 'https://i.pravatar.cc/500?u=mentorship',
       category: 'Mentorship & Support',
       title: 'Resilience Mentorship',
       description: 'A faith-driven partnership that enables you to rebuild your sense of worth and cultivate a resilient mindset, no matter your past.'
     },
     {
       slug: 'community-outreach-events',
-      // SUGGESTION: Use a vibrant photo from one of your community outreach events seen on Facebook.
-      imageUrl: '/images/real/community-outreach-event.jpg',
+      // FIX: Replaced unreliable URL with a guaranteed working placeholder.
+      imageUrl: 'https://i.pravatar.cc/500?u=community',
       category: 'Community Building',
       title: 'Community Outreach Events',
       description: 'We create safe spaces and provide tangible support through local events, fostering connection and strengthening our community fabric.'
     },
     {
       slug: 'the-transformation-podcast',
-      // SUGGESTION: Use the official cover art for your podcast from YouTube or Instagram.
-      imageUrl: '/images/real/podcast-cover-art.jpg',
+      // FIX: Replaced unreliable URL with a guaranteed working placeholder.
+      imageUrl: 'https://i.pravatar.cc/500?u=podcast',
       category: 'Global Outreach',
       title: 'The Inspire Transformation Podcast',
       description: 'Sharing raw, truthful stories of transformation to inspire and empower a global audience to begin their own journey.'
@@ -99,7 +99,7 @@ export default function AdvancedHomePage() {
                 <div className="absolute top-0 left-0 w-full h-full bg-amber-300 rounded-2xl transform -rotate-3"></div>
                 <img 
                     // SUGGESTION: Use a candid, joyful photo of your community members interacting from your social media.
-                    src="/images/real/authentic-community-interaction.jpg" 
+                    src="/images/1.jpg" 
                     alt="Inspire Transformation community members" 
                     className="absolute inset-0 w-full h-full object-cover rounded-2xl shadow-xl"
                 />

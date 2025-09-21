@@ -10,7 +10,6 @@ export default function AdvancedHero({
   primaryCTA,
   secondaryCTA,
   image,
-  // The 'stats' prop is no longer used but kept here in case you want to add it back later
   stats, 
 }) {
 
@@ -44,21 +43,20 @@ export default function AdvancedHero({
   };
 
   return (
-    // Use min-h-screen to ensure it fills the screen and allows content to expand on mobile
     <div className="relative min-h-screen bg-slate-900 overflow-hidden pt-24 pb-12 lg:pt-0 lg:pb-0">
       {/* Background Video */}
       <motion.div style={{ y: backgroundY }} className="absolute inset-0 z-0">
         <video
           autoPlay loop muted playsInline
-          className="w-full h-full object-cover opacity-20"
-          poster="/images/hero-fallback.jpg"
+          className="w-full h-full object-cover opacity-10"
+          poster="/images/hero-fallback 2.jpg"
         >
-          <source src="/videos/community-video.mp4" type="video/mp4" />
+          <source src="/videos/BEGINNING OF A NEW SCHOOL.mp4" type="video/mp4" />
         </video>
       </motion.div>
 
       {/* Main Content Grid */}
-      <div className="relative z-20 h-full flex items-center">
+      <div className="relative z-20 h-full flex items-center md:pt-14">
         <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             
             {/* Left: Text Content */}
@@ -103,23 +101,33 @@ export default function AdvancedHero({
                 </motion.div>
             </motion.div>
 
-            {/* Right: Image (Now visible on all screen sizes) */}
+            {/* Right: Image - Smaller and Flashing */}
             <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1, ease: "easeOut", delay: 1.5 }}
-                className="w-full max-w-md mx-auto"
+                // FIX: Aligned the image container to the right on large screens
+                className="w-full max-w-sm mx-auto lg:ml-auto lg:mr-0" 
                 style={{ perspective: 1000 }}
             >
                 <motion.div 
                     whileHover={{ scale: 1.05 }}
                     style={{ transformStyle: "preserve-3d" }}
                     className="relative rounded-2xl overflow-hidden shadow-2xl"
+                    animate={{
+                        opacity: [0.3, 1, 0.3],
+                    }}
+                    transition={{
+                        duration: 4,
+                        ease: "easeInOut",
+                        repeat: Infinity,
+                        repeatDelay: 1
+                    }}
                 >
                     <img
-                        src={image}
+                        src="/images/hero-fallback.jpg"
                         alt="Inspire Transformation community"
-                        className="w-full h-[300px] sm:h-[400px] lg:h-[500px] object-cover"
+                        className="w-full h-[250px] sm:h-[350px] lg:h-[450px] object-cover" 
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent"></div>
                     <motion.p 
@@ -129,7 +137,6 @@ export default function AdvancedHero({
                         Founded by Deborah Okoi
                     </motion.p>
                 </motion.div>
-                {/* The stats component that was here has been removed. */}
             </motion.div>
         </div>
       </div>

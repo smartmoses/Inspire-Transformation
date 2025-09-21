@@ -26,15 +26,18 @@ const latestNews = [
 ];
 
 const photoGallery = [
-    { src: 'https://images.unsplash.com/photo-1531058020387-3be344556be6?q=80&w=2070&auto-format&fit=crop', alt: 'Community event attendees' },
-    { src: 'https://images.unsplash.com/photo-1593113598332-cd288d649433?q=80&w=2070&auto-format&fit=crop', alt: 'Volunteer distributing food' },
-    { src: 'https://images.unsplash.com/photo-1579208575657-c595a05383b7?q=80&w=2070&auto-format&fit=crop', alt: 'Children in a workshop' },
-    { src: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2070&auto-format&fit=crop', alt: 'Team meeting' },
+    { src: './images/1.jpg', alt: '' },
+    { src: './images/hero-fallback 2.jpg', alt: '' },
+    { src: './images/2.jpg', alt: '' },
+    { src: './images/3.jpg', alt: '' },
+   
 ];
 
 const videoGallery = [
-    { videoId: 'dQw4w9WgXcQ', title: 'Our 2025 Impact Story' },
-    { videoId: '3tmd-ClpJxA', title: 'A Volunteer\'s Testimony' },
+    { videoId: 'r3zjJpkK9gQ', title: 'BEGINNING OF A NEW SCHOOL' },
+    { videoId: '7sAmKSUcoao', title: 'Misconceptions on who needs therapy, and strategies to preventing molestation' },
+    { videoId: 'Ji1FMvf2Bw8', title: 'From Brokenness to Wholeness: A Testimony of Forgiveness After Abuse and Rape' },
+    { videoId: 'H5J_MIK2iFk', title: 'The Courage to Start Over'},
 ];
 
 // Reusable Tab Button
