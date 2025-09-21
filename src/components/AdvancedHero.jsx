@@ -48,7 +48,7 @@ export default function AdvancedHero({
       <motion.div style={{ y: backgroundY }} className="absolute inset-0 z-0">
         <video
           autoPlay loop muted playsInline
-          className="w-full h-full object-cover opacity-20"
+          className="w-full h-full object-cover opacity-30"
           poster="/images/hero-fallback 2.jpg"
         >
           <source src="/videos/BEGINNING OF A NEW SCHOOL.mp4" type="video/mp4" />

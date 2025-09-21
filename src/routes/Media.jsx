@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Newspaper, Camera, Video, Download, Mail, ArrowRight, Rss } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-// --- Data for the page ---
+// --- Data for the page (using your specified paths) ---
 const mediaStats = [
     { value: '25+', label: 'Press Mentions' },
     { value: '50+', label: 'Published Articles' },
@@ -25,14 +25,15 @@ const latestNews = [
     { slug: 'national-recognition', image: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=2070&auto-format&fit=crop', title: 'Inspire Transformation Receives National Recognition', date: 'August 12, 2025' },
 ];
 
+// --- Using YOUR specified image paths ---
 const photoGallery = [
-    { src: './images/1.jpg', alt: '' },
-    { src: './images/hero-fallback 2.jpg', alt: '' },
-    { src: './images/2.jpg', alt: '' },
-    { src: './images/3.jpg', alt: '' },
-   
+    { src: './images/1.jpg', alt: 'Inspire Transformation Event 1' },
+    { src: './images/hero-fallback 2.jpg', alt: 'Inspire Transformation Community' },
+    { src: './images/2.jpg', alt: 'Inspire Transformation Workshop' },
+    { src: './images/3.jpg', alt: 'Inspire Transformation Mentorship' },
 ];
 
+// --- Using YOUR specified video IDs ---
 const videoGallery = [
     { videoId: 'r3zjJpkK9gQ', title: 'BEGINNING OF A NEW SCHOOL' },
     { videoId: '7sAmKSUcoao', title: 'Misconceptions on who needs therapy, and strategies to preventing molestation' },
@@ -40,35 +41,11 @@ const videoGallery = [
     { videoId: 'H5J_MIK2iFk', title: 'The Courage to Start Over'},
 ];
 
-// Animation Variants
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.2, delayChildren: 0.3 }
-  }
-};
-
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: { 
-    y: 0, 
-    opacity: 1,
-    transition: { duration: 0.6, ease: "easeOut" }
-  }
-};
-
-const cardHover = { 
-  scale: 1.05, 
-  boxShadow: '0px 15px 30px rgba(0, 0, 0, 0.1)',
-  transition: { duration: 0.3 }
-};
-
-// Reusable Tab Button
+// Reusable Tab Button with improved responsiveness
 const TabButton = ({ name, icon, activeTab, setActiveTab }) => (
     <button
         onClick={() => setActiveTab(name)}
-        className={`flex items-center gap-2 px-6 py-3 font-semibold text-lg transition-colors relative ${
+        className={`flex items-center gap-2 px-4 sm:px-6 py-3 font-semibold text-base sm:text-lg transition-colors relative ${
             activeTab === name 
             ? 'text-red-500'
             : 'text-slate-400 hover:text-slate-100'
@@ -83,24 +60,50 @@ const TabButton = ({ name, icon, activeTab, setActiveTab }) => (
 
 
 export default function MediaPage() {
-  const [activeTab, setActiveTab] = useState('News');
+  const [activeTab, setActiveTab] = useState('Videos'); // Defaulting to 'Videos' as requested previously
   
   const tabs = [
-    { name: 'News', icon: <Newspaper size={18} /> },
-    { name: 'Photos', icon: <Camera size={18} /> },
     { name: 'Videos', icon: <Video size={18} /> },
+    { name: 'Photos', icon: <Camera size={18} /> },
+    { name: 'News', icon: <Newspaper size={18} /> },
   ];
 
   const renderTabContent = () => {
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+    };
+    const itemVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0 }
+    };
+
     switch(activeTab) {
         case 'Photos':
-            return <motion.div className="grid grid-cols-2 md:grid-cols-4 gap-4" variants={containerVariants} initial="hidden" animate="visible">
-                {photoGallery.map((photo, i) => <motion.img key={i} src={photo.src} alt={photo.alt} className="rounded-lg object-cover w-full h-48 hover:scale-105 transition-transform duration-300" variants={itemVariants} />)}
+            return <motion.div variants={containerVariants} initial="hidden" animate="visible" className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {photoGallery.map((photo, i) => 
+                    <motion.div key={i} variants={itemVariants} className="overflow-hidden rounded-lg">
+                        <motion.img src={photo.src} alt={photo.alt} className="w-full h-40 sm:h-48 object-cover" whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}/>
+                    </motion.div>
+                )}
+            </motion.div>;
+        case 'News':
+            return <motion.div variants={containerVariants} initial="hidden" animate="visible" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {latestNews.map(news => (
+                    <motion.div key={news.slug} variants={itemVariants}>
+                        <Link to={`/media/${news.slug}`} className="bg-slate-800 block border border-slate-700 p-4 rounded-xl shadow-sm hover:shadow-lg hover:border-red-500 transition-all group h-full">
+                             <img src={news.image} alt={news.title} className="rounded-lg mb-4 object-cover h-48 w-full" />
+                             <p className="text-xs text-slate-400 mb-1">{news.date}</p>
+                             <h3 className="font-semibold text-slate-200 group-hover:text-red-500 transition-colors text-lg leading-tight">{news.title}</h3>
+                        </Link>
+                    </motion.div>
+                ))}
             </motion.div>;
         case 'Videos':
-             return <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-8" variants={containerVariants} initial="hidden" animate="visible">
+        default:
+             return <motion.div variants={containerVariants} initial="hidden" animate="visible" className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {videoGallery.map(video => (
-                    <motion.div key={video.videoId} className="aspect-video" variants={itemVariants}>
+                    <motion.div key={video.videoId} variants={itemVariants} className="aspect-video">
                         <iframe
                             className="w-full h-full rounded-lg shadow-lg"
                             src={`https://www.youtube.com/embed/${video.videoId}`}
@@ -111,35 +114,15 @@ export default function MediaPage() {
                     </motion.div>
                 ))}
             </motion.div>;
-        case 'News':
-        default:
-            return <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8" variants={containerVariants} initial="hidden" animate="visible">
-                {latestNews.map(news => (
-                    <motion.div key={news.slug} variants={itemVariants} whileHover={cardHover}>
-                        <Link to={`/media/${news.slug}`} className="bg-slate-800 border border-slate-700 p-4 rounded-xl shadow-sm hover:shadow-lg hover:border-red-500 transition-all group">
-                             <img src={news.image} alt={news.title} className="rounded-lg mb-4 object-cover h-40 w-full" />
-                             <p className="text-xs text-slate-400 mb-1">{news.date}</p>
-                             <h3 className="font-semibold text-slate-200 group-hover:text-red-500 transition-colors">{news.title}</h3>
-                        </Link>
-                    </motion.div>
-                ))}
-            </motion.div>;
     }
   };
 
   return (
-    <motion.div 
-        className="bg-slate-900 text-slate-200"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.5 }}
-    >
-      {/* 1. Advanced Hero Section */}
+    <div className="bg-slate-900 text-slate-200">
       <section className="relative bg-slate-800 pt-32 pb-20 overflow-hidden">
         <div 
-            className="absolute inset-0 bg-cover bg-center opacity-10" 
-            style={{ backgroundImage: "url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto-format&fit=crop')" }}
+            className="absolute inset-0 bg-cover bg-center opacity-20" 
+            style={{ backgroundImage: "url('/images/hero-fallback 2.jpg')" }}
         ></div>
         <div className="relative max-w-5xl mx-auto px-6 text-center">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
@@ -147,60 +130,41 @@ export default function MediaPage() {
             </motion.div>
             <motion.h1 
                 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
-                className="mt-6 text-4xl sm:text-6xl font-extrabold text-white tracking-tight"
+                className="mt-6 text-4xl sm:text-5xl font-extrabold text-white tracking-tight"
             >
                 Media & Press Center
             </motion.h1>
             <motion.p 
                 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4 }}
-                className="mt-6 text-lg text-slate-300 max-w-2xl mx-auto"
+                className="mt-6 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto"
             >
-                Access official news, press releases, high-resolution assets, and get in touch with our media relations team.
+                Stay connected with our latest stories, press releases, and resources. Discover the impact we're making together.
             </motion.p>
         </div>
-        <motion.div 
-            initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.6 }}
-            className="relative max-w-4xl mx-auto mt-12 grid grid-cols-1 md:grid-cols-3 gap-px bg-white/10 rounded-xl shadow-lg"
-        >
-            {mediaStats.map(stat => (
-                <div key={stat.label} className="p-6 text-center">
-                    <p className="text-4xl font-bold text-amber-400">{stat.value}</p>
-                    <p className="mt-1 text-sm text-slate-400 uppercase tracking-wider">{stat.label}</p>
-                </div>
-            ))}
-        </motion.div>
       </section>
 
-      {/* 2. Story Spotlight Section */}
-      <section className="py-24">
+      <section className="py-20">
         <div className="max-w-6xl mx-auto px-6">
-            <h2 className="text-3xl font-bold text-slate-100 mb-4">Story Spotlight</h2>
-            <motion.div 
-                className="grid lg:grid-cols-5 gap-8 items-center bg-slate-800 p-8 rounded-2xl shadow-2xl"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.8 }}
-            >
-                <div className="lg:col-span-2 h-80 rounded-xl overflow-hidden">
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-100 mb-4">Story Spotlight</h2>
+            <div className="grid lg:grid-cols-5 gap-8 items-center bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-2xl">
+                <div className="lg:col-span-2 h-64 sm:h-80 rounded-xl overflow-hidden">
                     <img src={featuredArticle.image} alt={featuredArticle.title} className="w-full h-full object-cover" />
                 </div>
                 <div className="lg:col-span-3">
                     <p className="font-semibold text-red-500">{featuredArticle.category}</p>
-                    <h3 className="mt-2 text-3xl font-bold text-white tracking-tight">
+                    <h3 className="mt-2 text-2xl sm:text-3xl font-bold text-white tracking-tight">
                         {featuredArticle.title}
                     </h3>
-                    <p className="mt-4 text-slate-300 leading-relaxed">{featuredArticle.excerpt}</p>
+                    <p className="mt-4 text-slate-300 leading-relaxed text-sm sm:text-base">{featuredArticle.excerpt}</p>
                     <Link to={`/media/${featuredArticle.slug}`} className="group mt-6 inline-flex items-center text-amber-400 font-bold">
                         Read Full Story <ArrowRight size={20} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
                     </Link>
                 </div>
-            </motion.div>
+            </div>
         </div>
       </section>
 
-      {/* 3. Tabbed Content Section */}
-      <section className="bg-slate-900 py-24">
+      <section className="bg-slate-900 py-20">
         <div className="max-w-7xl mx-auto px-6">
             <div className="flex justify-center border-b border-slate-700 mb-12">
                 {tabs.map(tab => (
@@ -219,7 +183,7 @@ export default function MediaPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                    transition={{ duration: 0.3 }}
                 >
                     {renderTabContent()}
                 </motion.div>
@@ -227,37 +191,36 @@ export default function MediaPage() {
         </div>
       </section>
 
-      {/* 4. Media Kit & Press Contact */}
-      <section className="py-24 bg-slate-100">
+      <section className="py-20 bg-slate-800">
         <div className="max-w-5xl mx-auto px-6 text-center">
-             <h2 className="text-3xl font-bold text-brand-900">For the Press</h2>
-             <p className="mt-3 max-w-2xl mx-auto text-lg text-slate-900">
+             <h2 className="text-2xl sm:text-3xl font-bold text-white">For the Press</h2>
+             <p className="mt-3 max-w-2xl mx-auto text-base sm:text-lg text-slate-300">
                 Access official assets or contact our media team for inquiries and interviews.
             </p>
             <div className="mt-12 grid sm:grid-cols-2 gap-8 text-left">
-                <motion.div whileHover={{ y: -8 }} className="bg-slate-900 p-8 rounded-xl transition-transform duration-300">
+                <div className="bg-slate-900 p-8 rounded-xl transform hover:-translate-y-2 transition-transform duration-300">
                     <div className="flex items-center gap-4">
                         <div className="bg-red-800/20 text-red-500 p-3 rounded-full"><Download size={24} /></div>
-                        <h3 className="text-2xl font-bold text-white">Media Kit</h3>
+                        <h3 className="text-xl sm:text-2xl font-bold text-white">Media Kit</h3>
                     </div>
-                    <p className="mt-4 text-slate-300">Download our comprehensive media kit, including logos, brand guidelines, and high-resolution images.</p>
+                    <p className="mt-4 text-slate-300 text-sm sm:text-base">Download our comprehensive media kit, including logos, brand guidelines, and high-resolution images.</p>
                     <a href="/inspire-transformation-media-kit.zip" className="group mt-6 inline-flex items-center text-amber-400 font-bold">
                         Download (.zip) <ArrowRight size={20} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
                     </a>
-                </motion.div>
-                 <motion.div whileHover={{ y: -8 }} className="bg-slate-900 p-8 rounded-xl transition-transform duration-300">
+                </div>
+                 <div className="bg-slate-900 p-8 rounded-xl transform hover:-translate-y-2 transition-transform duration-300">
                     <div className="flex items-center gap-4">
                         <div className="bg-red-800/20 text-red-500 p-3 rounded-full"><Mail size={24} /></div>
-                        <h3 className="text-2xl font-bold text-white">Press Inquiries</h3>
+                        <h3 className="text-xl sm:text-2xl font-bold text-white">Press Inquiries</h3>
                     </div>
-                    <p className="mt-4 text-slate-300">For all media inquiries, interviews, or event invitations, please contact our team directly.</p>
+                    <p className="mt-4 text-slate-300 text-sm sm:text-base">For all media inquiries, interviews, or event invitations, please contact our team directly.</p>
                      <a href="mailto:press@inspiretransformation.org" className="group mt-6 inline-flex items-center text-amber-400 font-bold">
                         Email Us <ArrowRight size={20} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
                     </a>
-                </motion.div>
+                </div>
             </div>
         </div>
       </section>
-    </motion.div>
+    </div>
   );
 }
