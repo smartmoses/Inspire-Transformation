@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Helmet } from 'react-helmet';
 import { Menu, X } from 'lucide-react';
 
 const navLinks = [
@@ -60,6 +61,13 @@ export default function Header() {
 
   return (
     <>
+      <Helmet>
+        <title>Inspire Transformation: Education and Community Empowerment</title>
+        <meta name="description" content="Empowering individuals through education, community support, and transformative programs." />
+        <meta name="keywords" content="education, community support, transformation, programs, inspire, empowerment" />
+        {/* You can add more meta tags here as needed */}
+      </Helmet>
+
       <header 
         className={`sticky top-0 z-50 transition-all duration-300 ${
           isScrolled ? 'bg-white/80 backdrop-blur-sm shadow-md' : 'bg-white/50'
