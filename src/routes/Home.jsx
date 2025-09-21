@@ -126,7 +126,7 @@ export default function AdvancedHomePage() {
             >
                 <div className="absolute top-0 left-0 w-full h-full bg-amber-300 rounded-2xl transform -rotate-3"></div>
                 <img 
-                    src="/images/1.jpg" 
+                    src="/images/Gemini_Generated_Image_v0l9w7v0l9w7v0l9.png" 
                     alt="Inspire Transformation community members" 
                     className="absolute inset-0 w-full h-full object-cover rounded-2xl shadow-xl"
                 />
