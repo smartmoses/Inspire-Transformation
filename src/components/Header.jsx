@@ -71,6 +71,7 @@ export default function Header() {
                 src="/logo.png"
                 alt="Inspire Transformation Logo"
                 className="h-12 transition-transform duration-300 hover:scale-110"
+                
               />
             </Link>
 
