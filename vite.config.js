@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  base: '/Inspire-Transformation/',  // Add this line - matches your repo name
   build: {
     outDir: 'dist',
     assetsDir: 'assets',

@@ -1,98 +1,147 @@
-import ContactForm from '../components/ContactForm'
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Mail, Phone, MapPin, ChevronDown, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
 
-export default function Contact() {
+// --- Import your branded ContactForm component ---
+import ContactForm from '../components/ContactForm';
+
+// --- Data for new sections ---
+const contactDetails = [
+    { icon: <Mail size={20} />, label: "General Inquiries", value: "info@inspiretransformation.org", href: "mailto:info@inspiretransformation.org" },
+    { icon: <Phone size={20} />, label: "Phone Support", value: "+234 801 234 5678", href: "tel:+2348012345678" },
+    { icon: <MapPin size={20} />, label: "Our Office", value: "123 Community Road, Calabar, Nigeria" },
+];
+
+const socialLinks = [
+  { href: "#", icon: <Facebook />, label: "Facebook" },
+  { href: "#", icon: <Instagram />, label: "Instagram" },
+  { href: "#", icon: <Linkedin />, label: "LinkedIn" },
+  { href: "#", icon: <Youtube />, label: "YouTube" },
+];
+
+// --- Reusable FAQ Item Component ---
+const FaqItem = ({ q, a }) => (
+    <details className="group border-b border-stone-200 py-4">
+        <summary className="flex items-center justify-between cursor-pointer list-none">
+            <span className="font-semibold text-stone-800 group-hover:text-red-800">{q}</span>
+            <ChevronDown className="transform transition-transform duration-300 group-open:-rotate-180" />
+        </summary>
+        <p className="mt-4 text-stone-600 leading-relaxed">{a}</p>
+    </details>
+);
+
+
+export default function ContactPage() {
   return (
-    <div className="max-w-6xl mx-auto px-6 py-16">
-      {/* Page Title */}
-      <h1 className="text-4xl font-bold text-center">Get in Touch</h1>
-      <p className="mt-4 text-lg text-slate-700 leading-relaxed text-center max-w-2xl mx-auto">
-        Whether you’re looking to partner with us, volunteer, share your story, 
-        or simply learn more about our work, we’d love to hear from you. 
-        At Inspire Transformation, every message matters because every person matters.
-      </p>
-
-      {/* Contact Grid */}
-      <div className="mt-16 grid md:grid-cols-2 gap-8">
-        {/* Contact Form */}
-        <div className="bg-white p-8 rounded-lg shadow">
-          <h3 className="text-xl font-semibold">Send a Message</h3>
-          <p className="text-slate-600 mt-2 text-sm">
-            Fill out the form below and a member of our team will respond within 2–3 business days.
-          </p>
-          <div className="mt-6">
-            <ContactForm />
-          </div>
+    <div className="bg-white">
+      {/* 1. Page Header */}
+      <section className="bg-stone-50 py-20">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
+            className="text-4xl sm:text-5xl font-bold text-stone-800 tracking-tight"
+          >
+            Get in Touch
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-4 text-lg text-stone-600 max-w-2xl mx-auto"
+          >
+            Whether you’re looking to partner, volunteer, or learn more about our work, we’d love to hear from you. Every message matters because every person matters.
+          </motion.p>
         </div>
+      </section>
+      
+      {/* 2. Main Contact Section (Asymmetrical Layout) */}
+      <section className="py-20">
+        <div className="max-w-6xl mx-auto px-6 grid lg:grid-cols-3 gap-12">
+            {/* Left side: Contact Details */}
+            <motion.div 
+                initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.8 }}
+                className="lg:col-span-1"
+            >
+                <h2 className="text-2xl font-bold text-stone-800">Contact Information</h2>
+                <p className="mt-2 text-stone-600">Find us here. We're available during office hours to assist you.</p>
+                <div className="mt-8 space-y-6">
+                    {contactDetails.map(item => (
+                        <div key={item.label} className="flex items-start gap-4">
+                            <div className="bg-red-100 text-red-800 p-3 rounded-full flex-shrink-0">
+                                {item.icon}
+                            </div>
+                            <div>
+                                <h3 className="font-semibold text-stone-800">{item.label}</h3>
+                                {item.href ? (
+                                    <a href={item.href} className="text-stone-600 hover:text-red-800 transition">{item.value}</a>
+                                ) : (
+                                    <p className="text-stone-600">{item.value}</p>
+                                )}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                 <div className="mt-8 pt-6 border-t border-stone-200">
+                    <h3 className="font-semibold text-stone-800">Connect With Us</h3>
+                    <div className="flex gap-4 mt-4">
+                        {socialLinks.map(social => (
+                             <a 
+                                key={social.label} 
+                                href={social.href} 
+                                aria-label={social.label}
+                                className="p-3 bg-stone-100 rounded-full text-stone-600 hover:bg-red-100 hover:text-red-800 transition-colors"
+                            >
+                                {React.cloneElement(social.icon, { size: 20 })}
+                            </a>
+                        ))}
+                    </div>
+                </div>
+            </motion.div>
 
-        {/* Contact Details */}
-        <div className="bg-white p-8 rounded-lg shadow">
-          <h3 className="text-xl font-semibold">Contact Details</h3>
-          <p className="text-slate-600 mt-4">
-            <span className="font-medium">General Inquiries:</span> hello@inspiretransformation.org
-          </p>
-          <p className="text-slate-600 mt-2">
-            <span className="font-medium">Partnerships:</span> partners@inspiretransformation.org
-          </p>
-          <p className="text-slate-600 mt-2">
-            <span className="font-medium">Media & Press:</span> press@inspiretransformation.org
-          </p>
-          <p className="text-slate-600 mt-4">
-            <span className="font-medium">Phone:</span> +234 800 000 0000
-          </p>
-          <p className="text-slate-600 mt-2">
-            <span className="font-medium">Office Address:</span> Inspire Transformation Center, 
-            123 Community Road, Calabar, Nigeria.
-          </p>
-          <p className="text-slate-600 mt-4">
-            <span className="font-medium">Office Hours:</span><br />
-            Monday – Friday: 9:00 AM – 5:00 PM<br />
-            Saturday – Sunday: Closed
-          </p>
-
-          {/* Social Links */}
-          <div className="mt-6">
-            <h4 className="font-semibold">Connect With Us</h4>
-            <div className="mt-3 flex gap-4">
-              <a href="https://facebook.com" className="text-rose-600 hover:underline">Facebook</a>
-              <a href="https://instagram.com" className="text-rose-600 hover:underline">Instagram</a>
-              <a href="https://linkedin.com" className="text-rose-600 hover:underline">LinkedIn</a>
-              <a href="https://youtube.com" className="text-rose-600 hover:underline">YouTube</a>
+            {/* Right side: Contact Form */}
+            <div className="lg:col-span-2">
+                 <ContactForm />
             </div>
-          </div>
         </div>
-      </div>
+      </section>
 
-      {/* Map Section */}
-      <div className="mt-16">
-        <h3 className="text-2xl font-bold text-center">Visit Us</h3>
-        <p className="text-slate-600 text-center mt-2">
-          Stop by our community office during working hours. We’d love to welcome you.
-        </p>
-        <div className="mt-6 rounded-lg overflow-hidden shadow-lg h-[400px]">
-          {/* Google Maps Embed (replace src with actual NGO location) */}
-          <iframe
-            title="Inspire Transformation Location"
-            src="https://www.google.com/maps/embed?pb=!1m18..."
-            width="100%"
-            height="100%"
-            style={{ border: 0 }}
-            allowFullScreen=""
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          ></iframe>
+      {/* 3. Frequently Asked Questions (FAQ) Section */}
+      <section className="bg-stone-50 py-20">
+        <div className="max-w-4xl mx-auto px-6">
+             <div className="text-center mb-12">
+                <h2 className="text-3xl sm:text-4xl font-bold text-stone-800 tracking-tight">Frequently Asked Questions</h2>
+                <p className="mt-3 max-w-2xl mx-auto text-lg text-stone-600">
+                   Have a question? You might find the answer you're looking for below.
+                </p>
+            </div>
+            <div className="space-y-2">
+                <FaqItem 
+                    q="How can I volunteer with Inspire Transformation?"
+                    a="We're thrilled you want to join our team! Please visit our 'Get Involved' page to see current volunteer opportunities and fill out the application form. We have roles ranging from mentorship to event support."
+                />
+                 <FaqItem 
+                    q="What percentage of my donation goes directly to programs?"
+                    a="We are committed to financial integrity. At least 85% of every donation goes directly to funding our programs, supporting beneficiaries, and running community projects. The remainder covers essential administrative costs to keep our operations running smoothly."
+                />
+                 <FaqItem 
+                    q="Can my organization or church partner with you?"
+                    a="Absolutely. We believe in the power of collaboration. Please send us a message through the contact form with details about your organization, and our partnership coordinator will get in touch to explore how we can work together."
+                />
+            </div>
         </div>
-      </div>
+      </section>
 
-      {/* Emergency CTA */}
-      <div className="mt-16 bg-amber-50 p-8 rounded-lg text-center">
-        <h3 className="text-xl font-semibold">Need Immediate Help?</h3>
-        <p className="text-slate-600 mt-3 max-w-2xl mx-auto">
-          If you or someone you know in our community is in urgent need of food, 
-          counseling, or emergency support, please reach out to us directly via 
-          phone for faster assistance.
-        </p>
-        <p className="mt-4 font-medium text-rose-600 text-lg">Call: +234 800 000 0000</p>
-      </div>
+      {/* 4. Map Section */}
+       <section className="h-[450px]">
+         {/* Using a static image is often better for performance than a live map embed. */}
+         {/* You can link the image to Google Maps. */}
+         <a href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer" className="block w-full h-full">
+            <div 
+                className="w-full h-full bg-cover bg-center"
+                style={{backgroundImage: "url('/images/map-placeholder.png')"}} // Create a screenshot of your map location
+                aria-label="Map to Inspire Transformation office"
+            ></div>
+         </a>
+      </section>
+
     </div>
-  )
+  );
 }
