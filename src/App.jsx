@@ -10,6 +10,7 @@ import Media from './routes/Media'
 import GetInvolved from './routes/GetInvolved'
 import Donate from './routes/Donate'
 import Contact from './routes/Contact'
+import StartJourney from './routes/StartJourney'
 
 export default function App(){
   return (
@@ -25,6 +26,7 @@ export default function App(){
           <Route path="/get-involved" element={<GetInvolved />} />
           <Route path="/donate" element={<Donate />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/start-journey" element={<StartJourney />} />
         </Routes>
       </main>
       <Footer />

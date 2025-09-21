@@ -1,21 +1,62 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, Twitter, Linkedin, Youtube, Send } from 'lucide-react';
+import { Facebook, Instagram, Youtube, Send } from 'lucide-react';
 
-// --- Data arrays for easier management ---
+// --- Custom SVG Icons for TikTok and Threads ---
+const ThreadsIcon = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M11.5 13.5a2 2 0 1 0-2-2" />
+    <path d="M14.5 10.5a2 2 0 1 0 2 2" />
+    <path d="M7 10.5c-1.5 0-3 1.5-3 3.5s1.5 3.5 3 3.5" />
+    <path d="M17 14c1.5 0 3-1.5 3-3.5S18.5 7 17 7" />
+    <path d="M7 14a2 2 0 1 0 0-3.5" />
+    <path d="M17 10.5a2 2 0 1 0 0 3.5" />
+  </svg>
+);
+
+const TikTokIcon = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M21 7.5a4.5 4.5 0 0 1-4.5 4.5h-2.5V18a3 3 0 0 1-3 3s0 0 0 0a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h2.5a4.5 4.5 0 0 1 4.5 4.5z" />
+  </svg>
+);
+
+
+// --- Data arrays with updated, accurate links ---
 const quickLinks = [
   { to: "/about", label: "About Us" },
   { to: "/programs", label: "Our Programs" },
-  { to: "/impact", label: "Our Impact" },
+  { to: "/media", label: "Media Center" },
   { to: "/get-involved", label: "Get Involved" },
 ];
 
 const socialLinks = [
-  { href: "#", icon: <Facebook size={20} />, label: "Facebook" },
-  { href: "#", icon: <Twitter size={20} />, label: "Twitter" },
-  { href: "#", icon: <Instagram size={20} />, label: "Instagram" },
-  { href: "#", icon: <Linkedin size={20} />, label: "LinkedIn" },
-  { href: "#", icon: <Youtube size={20} />, label: "YouTube" },
+  { href: "https://www.facebook.com/share/1CPyqqrDde/?mibextid=wwXIfr", icon: <Facebook size={20} />, label: "Facebook" },
+  { href: "https://www.instagram.com/inspiretransformationpodcast?igsh=MXdpZmVhYmgybmFzaQ%3D%3D&utm_source=qr", icon: <Instagram size={20} />, label: "Instagram" },
+  { href: "https://youtube.com/@inspiretransformationpodcast?si=EQ7ZKCp-BVTCXVcb", icon: <Youtube size={20} />, label: "YouTube" },
+  { href: "https://www.tiktok.com/@inspiretransformationpod?_t=ZP-8zGKaFnJHwt&_r=1", icon: <TikTokIcon />, label: "TikTok" },
+  { href: "https://www.threads.com/@inspiretransformationpodcast?igshid=NTc4MTIwNjQ2YQ==", icon: <ThreadsIcon />, label: "Threads" },
 ];
 
 
@@ -28,18 +69,18 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-stone-900 text-stone-300">
+    <footer className="bg-slate-900 text-slate-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           
           {/* Brand & Mission */}
           <div className="md:col-span-2 lg:col-span-1">
              <Link to="/" className="flex items-center gap-2 mb-4">
-              <img src="/logo.png" alt="Inspire Transformation Logo" className="h-10 w-10 rounded-full" />
-              <span className="font-bold text-xl text-white">Inspire Transformation</span>
+              <img src="/logo.png" alt="Inspire Transformation Logo" className="h-10 rounded-full" />
+             
             </Link>
-            <p className="text-sm leading-relaxed">
-              Empowering communities and restoring hope to build a brighter, resilient future together.
+            <p className="text-sm leading-relaxed text-slate-400">
+              A safe space where real stories meet raw truth, empowering you to embrace limitless possibilities in God.
             </p>
             <div className="flex gap-4 mt-6">
               {socialLinks.map((social) => (
@@ -47,7 +88,9 @@ export default function Footer() {
                   key={social.label} 
                   href={social.href} 
                   aria-label={social.label}
-                  className="text-stone-400 hover:text-red-600 transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-slate-400 hover:text-red-500 transition-colors"
                 >
                   {social.icon}
                 </a>
@@ -61,7 +104,7 @@ export default function Footer() {
             <ul className="space-y-3 text-sm">
               {quickLinks.map((link) => (
                 <li key={link.to}>
-                  <Link to={link.to} className="hover:text-red-600 transition-colors">
+                  <Link to={link.to} className="hover:text-red-500 transition-colors">
                     {link.label}
                   </Link>
                 </li>
@@ -78,16 +121,15 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold text-white mb-4 tracking-wider">Contact Us</h4>
             <ul className="space-y-3 text-sm">
-              <li><a href="mailto:info@inspiretransformation.org" className="hover:text-red-600 transition-colors">info@inspire.org</a></li>
-              <li><a href="tel:+2348012345678" className="hover:text-red-600 transition-colors">+234 801 234 5678</a></li>
-              <li className="text-stone-400">123 Inspire Avenue,<br />Lagos, Nigeria</li>
+              <li><a href="mailto:info@inspire-transformation.com" className="hover:text-red-500 transition-colors">info@inspire-transformation.com</a></li>
+              <li className="text-slate-400">A Global Faith Community</li>
             </ul>
           </div>
 
           {/* Newsletter Signup */}
           <div>
             <h4 className="font-semibold text-white mb-4 tracking-wider">Stay Updated</h4>
-            <p className="text-sm mb-4">Subscribe to our newsletter for the latest news and impact stories.</p>
+            <p className="text-sm mb-4 text-slate-400">Subscribe for the latest stories and updates from our community.</p>
             <form onSubmit={handleNewsletterSubmit} className="flex">
               <label htmlFor="email-newsletter" className="sr-only">Email address</label>
               <input 
@@ -96,7 +138,7 @@ export default function Footer() {
                 type="email" 
                 required
                 placeholder="Your email"
-                className="w-full bg-stone-800 border border-stone-700 text-white px-3 py-2 rounded-l-md focus:outline-none focus:ring-2 focus:ring-red-700"
+                className="w-full bg-slate-800 border border-slate-700 text-white px-3 py-2 rounded-l-md focus:outline-none focus:ring-2 focus:ring-red-600"
               />
               <button 
                 type="submit" 
@@ -112,8 +154,8 @@ export default function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-stone-800 text-sm text-center py-5">
-        <p>&copy; {new Date().getFullYear()} Inspire Transformation. All Rights Reserved.</p>
+      <div className="border-t border-slate-800 text-sm text-center py-5">
+        <p className="text-slate-500">&copy; {new Date().getFullYear()} Inspire Transformation. All Rights Reserved.</p>
       </div>
     </footer>
   );

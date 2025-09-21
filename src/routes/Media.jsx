@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Newspaper, Camera, Video, Download, Mail, ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Newspaper, Camera, Video, Download, Mail, ArrowRight, Rss } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-// --- Data for the page (In a real app, this would come from a CMS) ---
+// --- Data for the page ---
+const mediaStats = [
+    { value: '25+', label: 'Press Mentions' },
+    { value: '50+', label: 'Published Articles' },
+    { value: '10K+', label: 'Social Reach' },
+];
+
 const featuredArticle = {
     slug: 'youth-empowerment-launch',
     image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto-format&fit=crop',
@@ -20,27 +26,44 @@ const latestNews = [
 ];
 
 const photoGallery = [
-    { src: 'https://images.unsplash.com/photo-1531058020387-3be344556be6?q=80&w=2070&auto=format&fit=crop', alt: 'Community event attendees' },
+    { src: 'https://images.unsplash.com/photo-1531058020387-3be344556be6?q=80&w=2070&auto-format&fit=crop', alt: 'Community event attendees' },
     { src: 'https://images.unsplash.com/photo-1593113598332-cd288d649433?q=80&w=2070&auto-format&fit=crop', alt: 'Volunteer distributing food' },
     { src: 'https://images.unsplash.com/photo-1579208575657-c595a05383b7?q=80&w=2070&auto-format&fit=crop', alt: 'Children in a workshop' },
-    { src: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2070&auto=format&fit=crop', alt: 'Team meeting' },
+    { src: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2070&auto-format&fit=crop', alt: 'Team meeting' },
 ];
 
 const videoGallery = [
-    { videoId: 'dQw4w9WgXcQ', title: 'Our 2025 Impact Story' }, // Example YouTube video ID
+    { videoId: 'dQw4w9WgXcQ', title: 'Our 2025 Impact Story' },
     { videoId: '3tmd-ClpJxA', title: 'A Volunteer\'s Testimony' },
 ];
+
+// Reusable Tab Button
+const TabButton = ({ name, icon, activeTab, setActiveTab }) => (
+    <button
+        onClick={() => setActiveTab(name)}
+        className={`flex items-center gap-2 px-6 py-3 font-semibold text-lg transition-colors relative ${
+            activeTab === name 
+            ? 'text-red-500'
+            : 'text-slate-400 hover:text-slate-100'
+        }`}
+    >
+        {icon} {name}
+        {activeTab === name && (
+            <motion.div className="absolute bottom-0 left-0 right-0 h-0.5 bg-red-500" layoutId="underline" />
+        )}
+    </button>
+);
 
 
 export default function MediaPage() {
   const [activeTab, setActiveTab] = useState('News');
-
+  
   const tabs = [
     { name: 'News', icon: <Newspaper size={18} /> },
     { name: 'Photos', icon: <Camera size={18} /> },
     { name: 'Videos', icon: <Video size={18} /> },
   ];
-  
+
   const renderTabContent = () => {
     switch(activeTab) {
         case 'Photos':
@@ -65,10 +88,10 @@ export default function MediaPage() {
         default:
             return <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {latestNews.map(news => (
-                    <Link to={`/media/${news.slug}`} key={news.slug} className="bg-white border border-stone-200 p-4 rounded-xl shadow-sm hover:shadow-lg transition-shadow group">
+                    <Link to={`/media/${news.slug}`} key={news.slug} className="bg-slate-800 border border-slate-700 p-4 rounded-xl shadow-sm hover:shadow-lg hover:border-red-500 transition-all group">
                          <img src={news.image} alt={news.title} className="rounded-lg mb-4 object-cover h-40 w-full" />
-                         <p className="text-xs text-stone-500 mb-1">{news.date}</p>
-                         <h3 className="font-semibold text-stone-800 group-hover:text-red-800 transition-colors">{news.title}</h3>
+                         <p className="text-xs text-slate-400 mb-1">{news.date}</p>
+                         <h3 className="font-semibold text-slate-200 group-hover:text-red-500 transition-colors">{news.title}</h3>
                     </Link>
                 ))}
             </div>;
@@ -76,95 +99,118 @@ export default function MediaPage() {
   };
 
   return (
-    <div className="bg-white">
-      {/* 1. Page Header */}
-      <section className="bg-stone-50 py-20">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+    <div className="bg-slate-900 text-slate-200">
+      {/* 1. Advanced Hero Section */}
+      <section className="relative bg-slate-800 pt-32 pb-20 overflow-hidden">
+        <div 
+            className="absolute inset-0 bg-cover bg-center opacity-10" 
+            style={{ backgroundImage: "url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto-format&fit=crop')" }}
+        ></div>
+        <div className="relative max-w-5xl mx-auto px-6 text-center">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+                <Rss size={48} className="mx-auto text-amber-400" />
+            </motion.div>
             <motion.h1 
-                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
-                className="text-4xl sm:text-5xl font-bold text-stone-800 tracking-tight"
+                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
+                className="mt-6 text-4xl sm:text-6xl font-extrabold text-white tracking-tight"
             >
-                Media Center
+                Media & Press Center
             </motion.h1>
             <motion.p 
-                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
-                className="mt-4 text-lg text-stone-600 max-w-2xl mx-auto"
+                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4 }}
+                className="mt-6 text-lg text-slate-300 max-w-2xl mx-auto"
             >
-                Stay connected with our latest stories, press releases, and resources. Discover the impact we're making together.
+                Access official news, press releases, high-resolution assets, and get in touch with our media relations team.
             </motion.p>
         </div>
+        <motion.div 
+            initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.6 }}
+            className="relative max-w-4xl mx-auto mt-12 grid grid-cols-1 md:grid-cols-3 gap-px bg-white/10 rounded-xl shadow-lg"
+        >
+            {mediaStats.map(stat => (
+                <div key={stat.label} className="p-6 text-center">
+                    <p className="text-4xl font-bold text-amber-400">{stat.value}</p>
+                    <p className="mt-1 text-sm text-slate-400 uppercase tracking-wider">{stat.label}</p>
+                </div>
+            ))}
+        </motion.div>
       </section>
 
-      {/* 2. Featured Story Section */}
-      <section className="py-20">
+      {/* 2. Story Spotlight Section */}
+      <section className="py-24">
         <div className="max-w-6xl mx-auto px-6">
-            <div className="grid lg:grid-cols-2 gap-10 items-center bg-white p-8 rounded-2xl shadow-xl border border-stone-200">
-                <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
-                    <img src={featuredArticle.image} alt={featuredArticle.title} className="rounded-xl object-cover w-full h-full" />
-                </motion.div>
-                <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
-                    <p className="font-semibold text-red-800">{featuredArticle.category}</p>
-                    <h2 className="mt-2 text-3xl font-bold text-stone-800 tracking-tight">
+            <h2 className="text-3xl font-bold text-slate-100 mb-4">Story Spotlight</h2>
+            <div className="grid lg:grid-cols-5 gap-8 items-center bg-slate-800 p-8 rounded-2xl shadow-2xl">
+                <div className="lg:col-span-2 h-80 rounded-xl overflow-hidden">
+                    <img src={featuredArticle.image} alt={featuredArticle.title} className="w-full h-full object-cover" />
+                </div>
+                <div className="lg:col-span-3">
+                    <p className="font-semibold text-red-500">{featuredArticle.category}</p>
+                    <h3 className="mt-2 text-3xl font-bold text-white tracking-tight">
                         {featuredArticle.title}
-                    </h2>
-                    <p className="mt-4 text-stone-600 leading-relaxed">{featuredArticle.excerpt}</p>
-                    <Link to={`/media/${featuredArticle.slug}`} className="group mt-6 inline-flex items-center text-red-800 font-bold">
+                    </h3>
+                    <p className="mt-4 text-slate-300 leading-relaxed">{featuredArticle.excerpt}</p>
+                    <Link to={`/media/${featuredArticle.slug}`} className="group mt-6 inline-flex items-center text-amber-400 font-bold">
                         Read Full Story <ArrowRight size={20} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
                     </Link>
-                </motion.div>
+                </div>
             </div>
         </div>
       </section>
 
       {/* 3. Tabbed Content Section */}
-      <section className="bg-stone-50 py-20">
-        <div className="max-w-6xl mx-auto px-6">
-            <div className="flex justify-center border-b border-stone-300 mb-12">
+      <section className="bg-slate-900 py-24">
+        <div className="max-w-7xl mx-auto px-6">
+            <div className="flex justify-center border-b border-slate-700 mb-12">
                 {tabs.map(tab => (
-                    <button
+                    <TabButton 
                         key={tab.name}
-                        onClick={() => setActiveTab(tab.name)}
-                        className={`flex items-center gap-2 px-6 py-3 font-semibold text-lg transition-colors ${
-                            activeTab === tab.name 
-                            ? 'border-b-2 border-red-800 text-red-800'
-                            : 'text-stone-500 hover:text-stone-800'
-                        }`}
-                    >
-                        {tab.icon} {tab.name}
-                    </button>
+                        name={tab.name}
+                        icon={tab.icon}
+                        activeTab={activeTab}
+                        setActiveTab={setActiveTab}
+                    />
                 ))}
             </div>
-            <div>
-                {renderTabContent()}
-            </div>
+            <AnimatePresence mode="wait">
+                <motion.div
+                    key={activeTab}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3 }}
+                >
+                    {renderTabContent()}
+                </motion.div>
+            </AnimatePresence>
         </div>
       </section>
 
       {/* 4. Media Kit & Press Contact */}
-      <section className="py-20">
+      <section className="py-24 bg-slate-100">
         <div className="max-w-5xl mx-auto px-6 text-center">
-             <h2 className="text-3xl font-bold text-stone-800">For the Press</h2>
-             <p className="mt-3 max-w-2xl mx-auto text-lg text-stone-600">
-                Access our official brand assets or get in touch with our media relations team for inquiries and interviews.
+             <h2 className="text-3xl font-bold text-brand-900">For the Press</h2>
+             <p className="mt-3 max-w-2xl mx-auto text-lg text-slate-900">
+                Access official assets or contact our media team for inquiries and interviews.
             </p>
-            <div className="mt-10 grid sm:grid-cols-2 gap-8">
-                <div className="bg-white border border-stone-200 p-8 rounded-xl text-left">
+            <div className="mt-12 grid sm:grid-cols-2 gap-8 text-left">
+                <div className="bg-slate-900 p-8 rounded-xl transform hover:-translate-y-2 transition-transform duration-300">
                     <div className="flex items-center gap-4">
-                        <div className="bg-red-100 text-red-800 p-3 rounded-full"><Download size={24} /></div>
-                        <h3 className="text-2xl font-bold text-stone-800">Media Kit</h3>
+                        <div className="bg-red-800/20 text-red-500 p-3 rounded-full"><Download size={24} /></div>
+                        <h3 className="text-2xl font-bold text-white">Media Kit</h3>
                     </div>
-                    <p className="mt-4 text-stone-600">Download our comprehensive media kit, including our logo, brand guidelines, and high-resolution images.</p>
-                    <a href="/inspire-transformation-media-kit.zip" className="group mt-6 inline-flex items-center text-red-800 font-bold">
+                    <p className="mt-4 text-slate-300">Download our comprehensive media kit, including logos, brand guidelines, and high-resolution images.</p>
+                    <a href="/inspire-transformation-media-kit.zip" className="group mt-6 inline-flex items-center text-amber-400 font-bold">
                         Download (.zip) <ArrowRight size={20} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
                     </a>
                 </div>
-                 <div className="bg-white border border-stone-200 p-8 rounded-xl text-left">
+                 <div className="bg-slate-900 p-8 rounded-xl transform hover:-translate-y-2 transition-transform duration-300">
                     <div className="flex items-center gap-4">
-                        <div className="bg-red-100 text-red-800 p-3 rounded-full"><Mail size={24} /></div>
-                        <h3 className="text-2xl font-bold text-stone-800">Press Inquiries</h3>
+                        <div className="bg-red-800/20 text-red-500 p-3 rounded-full"><Mail size={24} /></div>
+                        <h3 className="text-2xl font-bold text-white">Press Inquiries</h3>
                     </div>
-                    <p className="mt-4 text-stone-600">For all media inquiries, interviews, or event invitations, please contact our team directly.</p>
-                     <a href="mailto:press@inspiretransformation.org" className="group mt-6 inline-flex items-center text-red-800 font-bold">
+                    <p className="mt-4 text-slate-300">For all media inquiries, interviews, or event invitations, please contact our team directly.</p>
+                     <a href="mailto:press@inspiretransformation.org" className="group mt-6 inline-flex items-center text-amber-400 font-bold">
                         Email Us <ArrowRight size={20} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
                     </a>
                 </div>

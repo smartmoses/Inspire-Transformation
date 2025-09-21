@@ -29,7 +29,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-stone-200">
+      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
@@ -37,11 +37,8 @@ export default function Header() {
               <img
                 src="/logo.png"
                 alt="Inspire Transformation Logo"
-                className="h-10 w-10 rounded-full object-cover"
+                className="h-10"
               />
-              <span className="hidden sm:block font-bold text-xl text-stone-800">
-                Inspire Transformation
-              </span>
             </Link>
 
             {/* Desktop Navigation */}
@@ -51,8 +48,8 @@ export default function Header() {
                   key={to}
                   to={to}
                   className={({ isActive }) =>
-                    `py-2 text-stone-700 transition-colors duration-300 hover:text-red-800 ${
-                      isActive ? 'font-bold text-red-800' : 'font-medium'
+                    `py-2 transition-colors duration-300 hover:text-brand-800 ${
+                      isActive ? 'font-bold text-brand-800' : 'font-medium text-brand-950'
                     }`
                   }
                 >
@@ -60,10 +57,10 @@ export default function Header() {
                 </NavLink>
               ))}
               <Link
-                to="/donate"
-                className="bg-red-800 text-white font-semibold px-4 py-2 rounded-lg shadow-sm hover:bg-red-700 transition-all duration-300"
+                to="/start-journey"
+                className="bg-brand-800 text-white font-semibold px-4 py-2 rounded-lg shadow-sm hover:bg-brand-900 transition-all duration-300"
               >
-                Donate Now
+                Start Your Journey
               </Link>
             </nav>
 
@@ -73,7 +70,7 @@ export default function Header() {
                 aria-label="Toggle menu"
                 aria-expanded={isMenuOpen}
                 onClick={toggleMenu}
-                className="p-2 rounded-md text-stone-600 hover:bg-stone-100"
+                className="p-2 rounded-md text-brand-900 hover:bg-brand-100"
               >
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -84,7 +81,7 @@ export default function Header() {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 z-40 bg-white transform md:hidden ${
+        className={`fixed inset-0 z-40 bg-gradient-to-b from-white to-brand-100 transform md:hidden ${
           isMenuOpen ? 'translate-x-0' : 'translate-x-full'
         } transition-transform duration-300 ease-in-out`}
       >
@@ -97,7 +94,7 @@ export default function Header() {
                 onClick={toggleMenu}
                 className={({ isActive }) =>
                   `text-2xl ${
-                    isActive ? 'text-red-800 font-bold' : 'text-stone-700 font-medium'
+                    isActive ? 'text-brand-800 font-bold' : 'text-brand-950 font-medium hover:text-brand-800'
                   }`
                 }
               >
@@ -105,11 +102,11 @@ export default function Header() {
               </NavLink>
             ))}
             <Link
-              to="/donate"
+              to="/start-journey"
               onClick={toggleMenu}
-              className="mt-4 bg-red-800 text-white font-semibold px-8 py-3 rounded-lg shadow-lg text-lg"
+              className="mt-4 bg-brand-800 text-white font-semibold px-8 py-3 rounded-lg shadow-lg text-lg hover:bg-brand-900 transition-all duration-300"
             >
-              Donate Now
+              Start Your Journey
             </Link>
           </nav>
         </div>

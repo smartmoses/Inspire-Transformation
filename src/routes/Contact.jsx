@@ -1,147 +1,143 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, ChevronDown, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
-
-// --- Import your branded ContactForm component ---
+import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
 import ContactForm from '../components/ContactForm';
 
-// --- Data for new sections ---
-const contactDetails = [
-    { icon: <Mail size={20} />, label: "General Inquiries", value: "info@inspiretransformation.org", href: "mailto:info@inspiretransformation.org" },
-    { icon: <Phone size={20} />, label: "Phone Support", value: "+234 801 234 5678", href: "tel:+2348012345678" },
-    { icon: <MapPin size={20} />, label: "Our Office", value: "123 Community Road, Calabar, Nigeria" },
-];
+const Contact = () => {
+  const contactDetails = [
+    {
+      icon: <Mail size={20} />,
+      label: "General Inquiries",
+      value: "info@inspiretransformation.org",
+      href: "mailto:info@inspiretransformation.org"
+    },
+    {
+      icon: <Phone size={20} />,
+      label: "Phone",
+      value: "(555) 123-4567",
+      href: "tel:+15551234567"
+    },
+    {
+      icon: <MapPin size={20} />,
+      label: "Location",
+      value: "Los Angeles, CA",
+      href: "https://goo.gl/maps/yourlocation"
+    }
+  ];
 
-const socialLinks = [
-  { href: "#", icon: <Facebook />, label: "Facebook" },
-  { href: "#", icon: <Instagram />, label: "Instagram" },
-  { href: "#", icon: <Linkedin />, label: "LinkedIn" },
-  { href: "#", icon: <Youtube />, label: "YouTube" },
-];
+  const socialLinks = [
+    {
+      icon: <Facebook size={24} />,
+      href: "https://facebook.com/inspiretransformation"
+    },
+    {
+      icon: <Instagram size={24} />,
+      href: "https://instagram.com/inspiretransformation"
+    },
+    {
+      icon: <Linkedin size={24} />,
+      href: "https://linkedin.com/company/inspiretransformation"
+    },
+    {
+      icon: <Youtube size={24} />,
+      href: "https://youtube.com/c/inspiretransformation"
+    }
+  ];
 
-// --- Reusable FAQ Item Component ---
-const FaqItem = ({ q, a }) => (
-    <details className="group border-b border-stone-200 py-4">
-        <summary className="flex items-center justify-between cursor-pointer list-none">
-            <span className="font-semibold text-stone-800 group-hover:text-red-800">{q}</span>
-            <ChevronDown className="transform transition-transform duration-300 group-open:-rotate-180" />
-        </summary>
-        <p className="mt-4 text-stone-600 leading-relaxed">{a}</p>
-    </details>
-);
-
-
-export default function ContactPage() {
   return (
-    <div className="bg-white">
-      {/* 1. Page Header */}
-      <section className="bg-stone-50 py-20">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
-            className="text-4xl sm:text-5xl font-bold text-stone-800 tracking-tight"
-          >
-            Get in Touch
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-4 text-lg text-stone-600 max-w-2xl mx-auto"
-          >
-            Whether you’re looking to partner, volunteer, or learn more about our work, we’d love to hear from you. Every message matters because every person matters.
-          </motion.p>
-        </div>
-      </section>
-      
-      {/* 2. Main Contact Section (Asymmetrical Layout) */}
-      <section className="py-20">
-        <div className="max-w-6xl mx-auto px-6 grid lg:grid-cols-3 gap-12">
-            {/* Left side: Contact Details */}
-            <motion.div 
-                initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.8 }}
-                className="lg:col-span-1"
+    <React.Fragment>
+      <div className="min-h-screen bg-white">
+        <section className="bg-gradient-to-b from-brand-100 to-white py-20">
+          <div className="max-w-4xl mx-auto px-6 text-center">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-4xl font-bold text-brand-900"
             >
-                <h2 className="text-2xl font-bold text-stone-800">Contact Information</h2>
-                <p className="mt-2 text-stone-600">Find us here. We're available during office hours to assist you.</p>
-                <div className="mt-8 space-y-6">
-                    {contactDetails.map(item => (
-                        <div key={item.label} className="flex items-start gap-4">
-                            <div className="bg-red-100 text-red-800 p-3 rounded-full flex-shrink-0">
-                                {item.icon}
-                            </div>
-                            <div>
-                                <h3 className="font-semibold text-stone-800">{item.label}</h3>
-                                {item.href ? (
-                                    <a href={item.href} className="text-stone-600 hover:text-red-800 transition">{item.value}</a>
-                                ) : (
-                                    <p className="text-stone-600">{item.value}</p>
-                                )}
-                            </div>
-                        </div>
+              Connect With Us
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mt-4 text-lg text-gray-950 max-w-2xl mx-auto"
+            >
+              Whether you are seeking personal transformation, wanting to share your story,
+              or looking to connect, we are here to listen. Your journey matters to us.
+            </motion.p>
+          </div>
+        </section>
+
+        <section className="py-16 bg-white">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              <div className="bg-brand-50 rounded-lg p-8 shadow-lg">
+                <h2 className="text-2xl font-semibold text-brand-900 mb-6">
+                  Send Us a Message
+                </h2>
+                <ContactForm />
+              </div>
+
+              <div>
+                <h2 className="text-2xl font-semibold text-brand-900 mb-6">
+                  Get in Touch
+                </h2>
+                <div className="space-y-6">
+                  {contactDetails.map((detail, index) => (
+                    <motion.div
+                      key={detail.label}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: index * 0.1 }}
+                      className="flex items-start space-x-4"
+                    >
+                      <div className="p-3 bg-brand-100 rounded-full">
+                        {detail.icon}
+                      </div>
+                      <div>
+                        <h3 className="font-medium text-gray-900">
+                          {detail.label}
+                        </h3>
+                        <a
+                          href={detail.href}
+                          className="text-brand-600 hover:text-brand-700 transition-colors"
+                        >
+                          {detail.value}
+                        </a>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+
+                <div className="mt-12">
+                  <h3 className="text-lg font-medium text-gray-900 mb-4">
+                    Follow Us
+                  </h3>
+                  <div className="flex space-x-4">
+                    {socialLinks.map((social, index) => (
+                      <motion.a
+                        key={index}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.3, delay: index * 0.1 }}
+                        className="p-2 bg-brand-100 rounded-full hover:bg-brand-200 transition-colors"
+                      >
+                        {social.icon}
+                      </motion.a>
                     ))}
+                  </div>
                 </div>
-                 <div className="mt-8 pt-6 border-t border-stone-200">
-                    <h3 className="font-semibold text-stone-800">Connect With Us</h3>
-                    <div className="flex gap-4 mt-4">
-                        {socialLinks.map(social => (
-                             <a 
-                                key={social.label} 
-                                href={social.href} 
-                                aria-label={social.label}
-                                className="p-3 bg-stone-100 rounded-full text-stone-600 hover:bg-red-100 hover:text-red-800 transition-colors"
-                            >
-                                {React.cloneElement(social.icon, { size: 20 })}
-                            </a>
-                        ))}
-                    </div>
-                </div>
-            </motion.div>
-
-            {/* Right side: Contact Form */}
-            <div className="lg:col-span-2">
-                 <ContactForm />
+              </div>
             </div>
-        </div>
-      </section>
-
-      {/* 3. Frequently Asked Questions (FAQ) Section */}
-      <section className="bg-stone-50 py-20">
-        <div className="max-w-4xl mx-auto px-6">
-             <div className="text-center mb-12">
-                <h2 className="text-3xl sm:text-4xl font-bold text-stone-800 tracking-tight">Frequently Asked Questions</h2>
-                <p className="mt-3 max-w-2xl mx-auto text-lg text-stone-600">
-                   Have a question? You might find the answer you're looking for below.
-                </p>
-            </div>
-            <div className="space-y-2">
-                <FaqItem 
-                    q="How can I volunteer with Inspire Transformation?"
-                    a="We're thrilled you want to join our team! Please visit our 'Get Involved' page to see current volunteer opportunities and fill out the application form. We have roles ranging from mentorship to event support."
-                />
-                 <FaqItem 
-                    q="What percentage of my donation goes directly to programs?"
-                    a="We are committed to financial integrity. At least 85% of every donation goes directly to funding our programs, supporting beneficiaries, and running community projects. The remainder covers essential administrative costs to keep our operations running smoothly."
-                />
-                 <FaqItem 
-                    q="Can my organization or church partner with you?"
-                    a="Absolutely. We believe in the power of collaboration. Please send us a message through the contact form with details about your organization, and our partnership coordinator will get in touch to explore how we can work together."
-                />
-            </div>
-        </div>
-      </section>
-
-      {/* 4. Map Section */}
-       <section className="h-[450px]">
-         {/* Using a static image is often better for performance than a live map embed. */}
-         {/* You can link the image to Google Maps. */}
-         <a href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer" className="block w-full h-full">
-            <div 
-                className="w-full h-full bg-cover bg-center"
-                style={{backgroundImage: "url('/images/map-placeholder.png')"}} // Create a screenshot of your map location
-                aria-label="Map to Inspire Transformation office"
-            ></div>
-         </a>
-      </section>
-
-    </div>
+          </div>
+        </section>
+      </div>
+    </React.Fragment>
   );
-}
+};
+
+export default Contact;
