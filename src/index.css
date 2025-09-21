@@ -4,5 +4,9 @@
 
 html, body, #root { height: 100%; }
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* Simple custom utilities */
 .bg-hero-pattern { background-image: linear-gradient(180deg, rgba(255,236,220,0.15), rgba(255,255,255,0)); }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle, Star } from 'lucide-react';
 
 // --- Data array for donation tiers ---
@@ -50,7 +51,7 @@ export default function DonateTiers() {
         {donationOptions.map(({ amount, impact, isFeatured }) => {
           const isSelected = selectedAmount === amount && !isCustom;
           return (
-            <div
+            <motion.div
               key={amount}
               onClick={() => handleTierClick(amount)}
               className={`relative p-6 rounded-xl border-2 transition-all duration-300 cursor-pointer ${
@@ -58,6 +59,8 @@ export default function DonateTiers() {
                   ? 'bg-red-50 border-red-800 shadow-lg scale-105' 
                   : 'bg-white border-stone-200 hover:border-red-600'
               }`}
+              whileHover={{ scale: 1.03, boxShadow: '0px 10px 20px rgba(0,0,0,0.1)' }}
+              whileTap={{ scale: 0.98 }}
             >
               {isFeatured && (
                 <div className="absolute -top-3 right-4 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
@@ -65,11 +68,18 @@ export default function DonateTiers() {
                   Most Popular
                 </div>
               )}
-              {isSelected && (
-                 <div className="absolute top-4 left-4 text-red-800">
-                    <CheckCircle size={24} />
-                 </div>
-              )}
+              <AnimatePresence>
+                {isSelected && (
+                    <motion.div 
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.5 }}
+                        className="absolute top-4 left-4 text-red-800"
+                    >
+                        <CheckCircle size={24} />
+                    </motion.div>
+                )}
+              </AnimatePresence>
 
               <div className={`text-center transition-all ${isSelected ? 'mt-6' : 'mt-0'}`}>
                 <div className="text-3xl font-bold text-stone-800">
@@ -79,7 +89,7 @@ export default function DonateTiers() {
                   {impact}
                 </p>
               </div>
-            </div>
+            </motion.div>
           );
         })}
       </div>
@@ -87,14 +97,21 @@ export default function DonateTiers() {
       {/* --- Custom Amount & Final Donation Button --- */}
       <div className="mt-8 text-center bg-stone-50 p-6 rounded-xl border border-stone-200">
         {!isCustom ? (
-          <button 
+          <motion.button 
             onClick={handleCustomClick}
             className="text-stone-700 font-semibold hover:text-red-800 transition"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
             ... or choose your own amount
-          </button>
+          </motion.button>
         ) : (
-          <div className="max-w-xs mx-auto">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            className="max-w-xs mx-auto"
+          >
             <label htmlFor="custom-amount" className="block text-sm font-semibold text-stone-700 mb-2">
               Enter your amount (₦)
             </label>
@@ -107,16 +124,18 @@ export default function DonateTiers() {
               className="w-full text-center text-2xl font-bold border-stone-300 rounded-lg p-2 focus:ring-2 focus:ring-red-700 outline-none"
               autoFocus
             />
-          </div>
+          </motion.div>
         )}
 
         <div className="mt-6">
-          <button
+          <motion.button
             disabled={!finalAmount || finalAmount < 500} // Example minimum amount
             className="w-full max-w-md mx-auto bg-red-800 text-white font-bold px-8 py-4 rounded-lg shadow-lg hover:bg-red-700 transition-all text-xl disabled:opacity-50 disabled:cursor-not-allowed"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
             Donate ₦{Number(finalAmount).toLocaleString()}
-          </button>
+          </motion.button>
           {finalAmount > 0 && finalAmount < 500 && (
              <p className="text-xs text-red-600 mt-2">Minimum donation is ₦500.</p>
           )}

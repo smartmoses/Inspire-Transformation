@@ -15,14 +15,14 @@ const TESTIMONIALS = [
       title: 'Workshop Participant',
       quote: 'The mentorship program completely changed my perspective. I feel more confident and equipped for the future.',
       // This is a reliable placeholder that will always work. Replace with your own image.
-      image: 'https://i.pravatar.cc/500?u=sarahjohnson',
+      image: '/images/Gemini_Generated_Image_1f9fjs1f9fjs1f9f.png',
     },
     {
-      name: 'David Chen',
+      name: 'Vivian Joe',
       title: 'Community Volunteer',
       quote: 'Volunteering with Inspire Transformation has been a deeply rewarding experience. Seeing the direct impact on people\'s lives is incredible.',
       // This is a reliable placeholder that will always work. Replace with your own image.
-      image: 'https://i.pravatar.cc/500?u=davidchen',
+      image: '/images/Gemini_Generated_Image_p6aluup6aluup6al (1).png',
     },
     {
       name: 'Rev. Maria Garcia',

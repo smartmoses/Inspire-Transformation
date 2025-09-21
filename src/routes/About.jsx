@@ -17,14 +17,44 @@ const teamMembers = [
     { name: 'Grace Nwosu', title: 'Community Outreach Coordinator', image: 'https://i.pravatar.cc/300?u=grace' },
 ];
 
+// Animation Variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.2, delayChildren: 0.3 }
+  }
+};
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: { 
+    y: 0, 
+    opacity: 1,
+    transition: { duration: 0.6, ease: "easeOut" }
+  }
+};
+
+const cardHover = { 
+  scale: 1.05, 
+  boxShadow: '0px 15px 30px rgba(0, 0, 0, 0.1)',
+  transition: { duration: 0.3 }
+};
+
 export default function AboutPage() {
   return (
-    <div className="bg-white">
+    <motion.div 
+        className="bg-white"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }}
+    >
       {/* 1. Page Header/Hero */}
       <section className="relative bg-gray-800 text-white py-24 sm:py-32">
          <div 
-            className="absolute inset-0 bg-cover bg-center opacity-20" 
-            style={{ backgroundImage: "url('https://images.unsplash.com/photo-1541544331-73862394a114?q=80&w=1974&auto=format&fit=crop')" }}
+            className="absolute inset-0 bg-cover bg-center opacity-10" 
+            style={{ backgroundImage: "url('/images/Gemini_Generated_Image_v0l9w7v0l9w7v0l9.png')" }}
         ></div>
         <div className="relative max-w-4xl mx-auto px-6 text-center">
           <motion.h1 
@@ -43,13 +73,16 @@ export default function AboutPage() {
       </section>
 
       {/* 2. Mission & Vision Section with Image */}
-      <section className="py-20">
+      <section className="py-24 sm:py-32">
         <div className="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div
-                initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.8 }}
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
             >
                 <div className="space-y-8">
-                    <div className="flex items-start gap-4">
+                    <motion.div variants={itemVariants} className="flex items-start gap-4">
                         <div className="bg-red-100 p-3 rounded-full text-red-800"><Target size={24} /></div>
                         <div>
                             <h3 className="text-2xl font-bold text-gray-800">Our Mission</h3>
@@ -58,8 +91,8 @@ export default function AboutPage() {
                                 with a resilience mindset, irrespective of where you've been or where you are.
                             </p>
                         </div>
-                    </div>
-                     <div className="flex items-start gap-4">
+                    </motion.div>
+                     <motion.div variants={itemVariants} className="flex items-start gap-4">
                         <div className="bg-red-100 p-3 rounded-full text-red-800"><Eye size={24} /></div>
                         <div>
                             <h3 className="text-2xl font-bold text-gray-800">Our Vision</h3>
@@ -69,11 +102,14 @@ export default function AboutPage() {
                                 possibilities in God.
                             </p>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </motion.div>
             <motion.div 
-                initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.8 }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
                 className="h-80 lg:h-[28rem] rounded-2xl overflow-hidden shadow-xl"
             >
                 <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=2070&auto=format&fit=crop" alt="Team collaborating" className="w-full h-full object-cover" />
@@ -82,21 +118,33 @@ export default function AboutPage() {
       </section>
 
       {/* 3. "Our Journey" Timeline Section */}
-      <section className="bg-gray-50 py-20">
+      <section className="bg-gray-50 py-24 sm:py-32">
         <div className="max-w-4xl mx-auto px-6">
-            <div className="text-center mb-16">
+            <motion.div 
+                className="text-center mb-16"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{ duration: 0.6 }}
+            >
                 <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 tracking-tight">Our Journey of Impact</h2>
                 <p className="mt-3 text-lg text-gray-600">From a simple vision to a growing movement, here are the key milestones that have shaped our story.</p>
-            </div>
+            </motion.div>
             <div className="relative">
                 {/* The vertical line */}
                 <div className="absolute left-4 top-0 h-full w-0.5 bg-gray-300" aria-hidden="true"></div>
                 {/* Timeline items */}
-                <div className="space-y-12">
+                <motion.div 
+                    className="space-y-12"
+                    variants={containerVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.2 }}
+                >
                     {journeyTimeline.map((item, index) => (
                         <motion.div 
                             key={index}
-                            initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 0.6 }}
+                            variants={itemVariants}
                             className="relative pl-12"
                         >
                             <div className="absolute left-0 top-1 flex items-center justify-center bg-red-800 text-white rounded-full w-8 h-8">
@@ -107,25 +155,38 @@ export default function AboutPage() {
                             <p className="mt-2 text-gray-600">{item.description}</p>
                         </motion.div>
                     ))}
-                </div>
+                </motion.div>
             </div>
         </div>
       </section>
 
       {/* 4. "Meet Our Leaders" Section */}
-      <section className="py-20 bg-white">
+      <section className="py-24 sm:py-32 bg-white">
         <div className="max-w-6xl mx-auto px-6">
-            <div className="text-center mb-12">
+            <motion.div 
+                className="text-center mb-16"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{ duration: 0.6 }}
+            >
                 <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 tracking-tight">Meet Our Leaders</h2>
                 <p className="mt-3 max-w-2xl mx-auto text-lg text-gray-600">
                    Our organization is guided by a passionate team dedicated to our mission.
                 </p>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            </motion.div>
+            <motion.div 
+                className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"
+                variants={containerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+            >
                 {teamMembers.map(member => (
                     <motion.div 
                         key={member.name}
-                        initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.6 }}
+                        variants={itemVariants}
+                        whileHover={cardHover}
                         className="text-center"
                     >
                         <div className="mx-auto h-48 w-48 mb-4">
@@ -135,26 +196,34 @@ export default function AboutPage() {
                         <p className="text-red-800 font-semibold">{member.title}</p>
                     </motion.div>
                 ))}
-            </div>
+            </motion.div>
         </div>
       </section>
 
       {/* 5. Final Call to Action */}
-      <section className="bg-brand-900">
-         <div className="max-w-4xl mx-auto px-6 py-20 text-center">
-             <h2 className="text-3xl sm:text-4xl font-bold text-white">
+      <section className="bg-brand-900 py-24 sm:py-32">
+         <motion.div 
+            className="max-w-4xl mx-auto px-6 text-center bg-red-700 text-white p-12 rounded-2xl shadow-2xl"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+         >
+             <h2 className="text-3xl sm:text-4xl font-bold">
                 Be a Part of the Story
              </h2>
              <p className="mt-4 max-w-xl mx-auto text-lg text-gray-300">
                 Our work is only possible through the generosity and commitment of partners like you. Join us in our mission to bring hope and lasting change.
              </p>
-             <div className="mt-8 flex justify-center gap-4">
-                <Link to="/get-involved" className="bg-amber-500 text-white font-bold px-8 py-3 rounded-lg shadow-lg hover:bg-amber-600 transition-transform transform hover:scale-105">
-                    Get Involved
-                </Link>
+             <div className="mt-8">
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Link to="/get-involved" className="bg-white text-red-800 font-bold px-8 py-3 rounded-lg shadow-lg hover:bg-slate-100 transition-colors text-lg">
+                        Get Involved
+                    </Link>
+                </motion.div>
              </div>
-         </div>
+         </motion.div>
       </section>
-    </div>
+    </motion.div>
   );
 }

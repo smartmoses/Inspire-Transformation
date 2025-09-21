@@ -48,11 +48,12 @@ export default function AdvancedHero({
       <motion.div style={{ y: backgroundY }} className="absolute inset-0 z-0">
         <video
           autoPlay loop muted playsInline
-          className="w-full h-full object-cover opacity-10"
+          className="w-full h-full object-cover opacity-20"
           poster="/images/hero-fallback 2.jpg"
         >
           <source src="/videos/BEGINNING OF A NEW SCHOOL.mp4" type="video/mp4" />
         </video>
+        <div className="absolute inset-0 bg-black/30 z-10"></div>
       </motion.div>
 
       {/* Main Content Grid */}
@@ -114,15 +115,6 @@ export default function AdvancedHero({
                     whileHover={{ scale: 1.05 }}
                     style={{ transformStyle: "preserve-3d" }}
                     className="relative rounded-2xl overflow-hidden shadow-2xl"
-                    animate={{
-                        opacity: [0.3, 1, 0.3],
-                    }}
-                    transition={{
-                        duration: 4,
-                        ease: "easeInOut",
-                        repeat: Infinity,
-                        repeatDelay: 1
-                    }}
                 >
                     <img
                         src="/images/hero-fallback.jpg"

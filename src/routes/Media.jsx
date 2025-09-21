@@ -40,6 +40,30 @@ const videoGallery = [
     { videoId: 'H5J_MIK2iFk', title: 'The Courage to Start Over'},
 ];
 
+// Animation Variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.2, delayChildren: 0.3 }
+  }
+};
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: { 
+    y: 0, 
+    opacity: 1,
+    transition: { duration: 0.6, ease: "easeOut" }
+  }
+};
+
+const cardHover = { 
+  scale: 1.05, 
+  boxShadow: '0px 15px 30px rgba(0, 0, 0, 0.1)',
+  transition: { duration: 0.3 }
+};
+
 // Reusable Tab Button
 const TabButton = ({ name, icon, activeTab, setActiveTab }) => (
     <button
@@ -70,13 +94,13 @@ export default function MediaPage() {
   const renderTabContent = () => {
     switch(activeTab) {
         case 'Photos':
-            return <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {photoGallery.map((photo, i) => <img key={i} src={photo.src} alt={photo.alt} className="rounded-lg object-cover w-full h-48 hover:scale-105 transition-transform duration-300" />)}
-            </div>;
+            return <motion.div className="grid grid-cols-2 md:grid-cols-4 gap-4" variants={containerVariants} initial="hidden" animate="visible">
+                {photoGallery.map((photo, i) => <motion.img key={i} src={photo.src} alt={photo.alt} className="rounded-lg object-cover w-full h-48 hover:scale-105 transition-transform duration-300" variants={itemVariants} />)}
+            </motion.div>;
         case 'Videos':
-             return <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+             return <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-8" variants={containerVariants} initial="hidden" animate="visible">
                 {videoGallery.map(video => (
-                    <div key={video.videoId} className="aspect-video">
+                    <motion.div key={video.videoId} className="aspect-video" variants={itemVariants}>
                         <iframe
                             className="w-full h-full rounded-lg shadow-lg"
                             src={`https://www.youtube.com/embed/${video.videoId}`}
@@ -84,25 +108,33 @@ export default function MediaPage() {
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
                         ></iframe>
-                    </div>
+                    </motion.div>
                 ))}
-            </div>;
+            </motion.div>;
         case 'News':
         default:
-            return <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            return <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8" variants={containerVariants} initial="hidden" animate="visible">
                 {latestNews.map(news => (
-                    <Link to={`/media/${news.slug}`} key={news.slug} className="bg-slate-800 border border-slate-700 p-4 rounded-xl shadow-sm hover:shadow-lg hover:border-red-500 transition-all group">
-                         <img src={news.image} alt={news.title} className="rounded-lg mb-4 object-cover h-40 w-full" />
-                         <p className="text-xs text-slate-400 mb-1">{news.date}</p>
-                         <h3 className="font-semibold text-slate-200 group-hover:text-red-500 transition-colors">{news.title}</h3>
-                    </Link>
+                    <motion.div key={news.slug} variants={itemVariants} whileHover={cardHover}>
+                        <Link to={`/media/${news.slug}`} className="bg-slate-800 border border-slate-700 p-4 rounded-xl shadow-sm hover:shadow-lg hover:border-red-500 transition-all group">
+                             <img src={news.image} alt={news.title} className="rounded-lg mb-4 object-cover h-40 w-full" />
+                             <p className="text-xs text-slate-400 mb-1">{news.date}</p>
+                             <h3 className="font-semibold text-slate-200 group-hover:text-red-500 transition-colors">{news.title}</h3>
+                        </Link>
+                    </motion.div>
                 ))}
-            </div>;
+            </motion.div>;
     }
   };
 
   return (
-    <div className="bg-slate-900 text-slate-200">
+    <motion.div 
+        className="bg-slate-900 text-slate-200"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }}
+    >
       {/* 1. Advanced Hero Section */}
       <section className="relative bg-slate-800 pt-32 pb-20 overflow-hidden">
         <div 
@@ -143,7 +175,13 @@ export default function MediaPage() {
       <section className="py-24">
         <div className="max-w-6xl mx-auto px-6">
             <h2 className="text-3xl font-bold text-slate-100 mb-4">Story Spotlight</h2>
-            <div className="grid lg:grid-cols-5 gap-8 items-center bg-slate-800 p-8 rounded-2xl shadow-2xl">
+            <motion.div 
+                className="grid lg:grid-cols-5 gap-8 items-center bg-slate-800 p-8 rounded-2xl shadow-2xl"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.8 }}
+            >
                 <div className="lg:col-span-2 h-80 rounded-xl overflow-hidden">
                     <img src={featuredArticle.image} alt={featuredArticle.title} className="w-full h-full object-cover" />
                 </div>
@@ -157,7 +195,7 @@ export default function MediaPage() {
                         Read Full Story <ArrowRight size={20} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
                     </Link>
                 </div>
-            </div>
+            </motion.div>
         </div>
       </section>
 
@@ -181,7 +219,7 @@ export default function MediaPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
                 >
                     {renderTabContent()}
                 </motion.div>
@@ -197,7 +235,7 @@ export default function MediaPage() {
                 Access official assets or contact our media team for inquiries and interviews.
             </p>
             <div className="mt-12 grid sm:grid-cols-2 gap-8 text-left">
-                <div className="bg-slate-900 p-8 rounded-xl transform hover:-translate-y-2 transition-transform duration-300">
+                <motion.div whileHover={{ y: -8 }} className="bg-slate-900 p-8 rounded-xl transition-transform duration-300">
                     <div className="flex items-center gap-4">
                         <div className="bg-red-800/20 text-red-500 p-3 rounded-full"><Download size={24} /></div>
                         <h3 className="text-2xl font-bold text-white">Media Kit</h3>
@@ -206,8 +244,8 @@ export default function MediaPage() {
                     <a href="/inspire-transformation-media-kit.zip" className="group mt-6 inline-flex items-center text-amber-400 font-bold">
                         Download (.zip) <ArrowRight size={20} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
                     </a>
-                </div>
-                 <div className="bg-slate-900 p-8 rounded-xl transform hover:-translate-y-2 transition-transform duration-300">
+                </motion.div>
+                 <motion.div whileHover={{ y: -8 }} className="bg-slate-900 p-8 rounded-xl transition-transform duration-300">
                     <div className="flex items-center gap-4">
                         <div className="bg-red-800/20 text-red-500 p-3 rounded-full"><Mail size={24} /></div>
                         <h3 className="text-2xl font-bold text-white">Press Inquiries</h3>
@@ -216,10 +254,10 @@ export default function MediaPage() {
                      <a href="mailto:press@inspiretransformation.org" className="group mt-6 inline-flex items-center text-amber-400 font-bold">
                         Email Us <ArrowRight size={20} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
                     </a>
-                </div>
+                </motion.div>
             </div>
         </div>
       </section>
-    </div>
+    </motion.div>
   );
 }
