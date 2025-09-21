@@ -1,22 +1,23 @@
-import React from 'react'
-import { Routes, Route } from 'react-router-dom'
-import Header from './components/Header'
-import Footer from './components/Footer'
-import Home from './routes/Home'
-import About from './routes/About'
-import Programs from './routes/Programs'
-import Impact from './routes/Impact'
-import Media from './routes/Media'
-import GetInvolved from './routes/GetInvolved'
-import Donate from './routes/Donate'
-import Contact from './routes/Contact'
-import StartJourney from './routes/StartJourney'
+import React from 'react';
+import { Routes, Route } from 'react-router-dom'; // Note: BrowserRouter is removed
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Home from './routes/Home';
+import About from './routes/About';
+import Programs from './routes/Programs';
+import Impact from './routes/Impact';
+import Media from './routes/Media';
+import GetInvolved from './routes/GetInvolved';
+import Donate from './routes/Donate';
+import Contact from './routes/Contact';
+import StartJourney from './routes/StartJourney';
 
-export default function App(){
+export default function App() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 antialiased">
       <Header />
       <main className="flex-1">
+        {/* The BrowserRouter component is removed from here */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -31,5 +32,5 @@ export default function App(){
       </main>
       <Footer />
     </div>
-  )
+  );
 }

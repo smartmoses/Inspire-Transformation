@@ -2,45 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Youtube, Send } from 'lucide-react';
 
-// --- Custom SVG Icons for TikTok and Threads ---
-const ThreadsIcon = (props) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    {...props}
-  >
-    <path d="M11.5 13.5a2 2 0 1 0-2-2" />
-    <path d="M14.5 10.5a2 2 0 1 0 2 2" />
-    <path d="M7 10.5c-1.5 0-3 1.5-3 3.5s1.5 3.5 3 3.5" />
-    <path d="M17 14c1.5 0 3-1.5 3-3.5S18.5 7 17 7" />
-    <path d="M7 14a2 2 0 1 0 0-3.5" />
-    <path d="M17 10.5a2 2 0 1 0 0 3.5" />
-  </svg>
-);
-
-const TikTokIcon = (props) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    {...props}
-  >
-    <path d="M21 7.5a4.5 4.5 0 0 1-4.5 4.5h-2.5V18a3 3 0 0 1-3 3s0 0 0 0a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h2.5a4.5 4.5 0 0 1 4.5 4.5z" />
-  </svg>
-);
+import { ThreadsIcon } from '../routes/ThreadsIcon';
+import { TikTokIcon } from '../routes/TikTokIcon';
 
 
 // --- Data arrays with updated, accurate links ---
